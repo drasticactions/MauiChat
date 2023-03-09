@@ -30,6 +30,8 @@ namespace MauiChat.ViewModels
 
         public event EventHandler<EventArgs>? OnSendingMessage;
 
+        public event EventHandler<EventArgs>? OnMessageReceived;
+
         public ObservableCollection<ChatMessage> Messages { get; private set; } = new ObservableCollection<ChatMessage>();
 
         public string Message
@@ -67,6 +69,7 @@ namespace MauiChat.ViewModels
             var message = await this.wrapper.StartAsync();
             await Task.Delay(1000);
             chatMessage.Message = message;
+            this.OnMessageReceived?.Invoke(this, EventArgs.Empty);
         }
 
         private async Task EndSessionAsync() {
@@ -74,12 +77,14 @@ namespace MauiChat.ViewModels
             var chatMessage = new ChatMessage(this.placeholderIcon, ChatMessageType.AI);
             this.Messages.Add(chatMessage);
             chatMessage.Message = await this.wrapper.StopAsync();
+            this.OnMessageReceived?.Invoke(this, EventArgs.Empty);
         }
 
         private async Task SendCommandAsync(string message) {
             this.Message = string.Empty;
             this.OnSendingMessage?.Invoke(this, new EventArgs());
             this.Messages.Add(new ChatMessage(this.placeholderIcon, message, ChatMessageType.User));
+            await Task.Delay(1000);
             await this.PerformBusyAsyncTask(() => this.SendQueryToModelAsync(message));
         }
 
@@ -96,6 +101,8 @@ namespace MauiChat.ViewModels
                 // Remove the loading message.
                 this.Messages.Remove(chatMessage);
             }
+
+            this.OnMessageReceived?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -16,7 +16,8 @@ public partial class MainPage : ContentPage
         this.provider = provider;
         this.InitializeComponent();
 
-        this.BindingContext = this.VM = this.provider.GetService<ChatViewModel>();
+        this.BindingContext = this.VM = this.provider.GetService<ChatViewModel>()!;
+        this.VM.OnMessageReceived += this.VM_OnMessageReceived;
     }
 
     public ChatViewModel VM { get; }
@@ -30,6 +31,16 @@ public partial class MainPage : ContentPage
     private void UserEntry_Completed(object sender, System.EventArgs e)
     {
         this.VM.SendMessageCommand.ExecuteAsync().FireAndForgetSafeAsync();
+    }
+
+    private void VM_OnMessageReceived(object? sender, EventArgs e)
+    {
+        // Workaround for https://github.com/dotnet/maui/issues/13451
+        // Force the height to redraw when the message is fully loaded.
+#if WINDOWS
+        var test = (Microsoft.UI.Xaml.Controls.ListView)this.Conversation.Handler!.PlatformView!;
+        test.UpdateLayout();
+#endif
     }
 }
 
