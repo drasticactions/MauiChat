@@ -60,48 +60,42 @@ namespace MauiChat.ViewModels
             return Task.CompletedTask;
         }
 
-        private async Task StartSessionAsync()
-        {
+        private async Task StartSessionAsync() {
             this.sessionStarted = true;
+            var chatMessage = new ChatMessage(this.placeholderIcon, ChatMessageType.AI);
+            this.Messages.Add(chatMessage);
             var message = await this.wrapper.StartAsync();
-            var chatMessage = new ChatMessage(this.placeholderIcon, message, ChatMessageType.AI);
-            this.Messages.Add(chatMessage);
+            await Task.Delay(1000);
+            chatMessage.Message = message;
         }
 
-        private async Task EndSessionAsync()
-        {
+        private async Task EndSessionAsync() {
             this.sessionStarted = false;
-            var message = await this.wrapper.StopAsync();
-            var chatMessage = new ChatMessage(this.placeholderIcon, message, ChatMessageType.AI);
+            var chatMessage = new ChatMessage(this.placeholderIcon, ChatMessageType.AI);
             this.Messages.Add(chatMessage);
+            chatMessage.Message = await this.wrapper.StopAsync();
         }
 
-        private async Task SendCommandAsync(string message)
-        {
+        private async Task SendCommandAsync(string message) {
             this.Message = string.Empty;
             this.OnSendingMessage?.Invoke(this, new EventArgs());
             this.Messages.Add(new ChatMessage(this.placeholderIcon, message, ChatMessageType.User));
             await this.PerformBusyAsyncTask(() => this.SendQueryToModelAsync(message));
         }
 
-        private async Task SendQueryToModelAsync(string message)
-        {
-            var aiMessage = string.Empty;
+        private async Task SendQueryToModelAsync(string message) {
+            var chatMessage = new ChatMessage(this.placeholderIcon, ChatMessageType.AI);
+            this.Messages.Add(chatMessage);
 
             var result = await this.wrapper.QueryAsync(message);
-            if (!string.IsNullOrEmpty(result))
-            {
-                aiMessage = result;
+            if (!string.IsNullOrEmpty(result)) {
+                chatMessage.Message = result;
             }
-            else
-            {
+            else {
                 // If we get an empty response from the model, something went wrong.
                 // Remove the loading message.
-                return;
+                this.Messages.Remove(chatMessage);
             }
-
-            var chatMessage = new ChatMessage(this.placeholderIcon, aiMessage, ChatMessageType.AI);
-            this.Messages.Add(chatMessage);
         }
     }
 }

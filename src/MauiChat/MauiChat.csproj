@@ -43,15 +43,27 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 	<ItemGroup>
+	  <AndroidResource Remove="Controls\**" />
+	  <Compile Remove="Controls\**" />
+	  <EmbeddedResource Remove="Controls\**" />
+	  <MauiCss Remove="Controls\**" />
+	  <MauiXaml Remove="Controls\**" />
+	  <None Remove="Controls\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.7.2" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
-		<PackageReference Include="Brushtail.FontAwesome.Mobile" Version="1.0.10" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Icon\dotnet_bot.png" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\Font Awesome 6 Brands-Regular-400.otf" />
+	  <None Remove="Resources\Fonts\Font Awesome 6 Free-Regular-400.otf" />
+	  <None Remove="Resources\Fonts\Font Awesome 6 Free-Solid-900.otf" />
+	  <None Remove="Resources\Images\avatar.png" />
 	  <None Remove="ViewModels\" />
 	  <None Remove="Models\" />
 	  <None Remove="Services\" />
@@ -62,7 +74,5 @@
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Models\" />
 	  <Folder Include="Services\" />
-	  <Folder Include="Utilities\" />
-	  <Folder Include="Controls\" />
 	</ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using Brushtail.FontAwesome.Mobile;
+using CommunityToolkit.Maui;
 using Drastic.Services;
 using MauiChat.Services;
 using MauiChat.ViewModels;
@@ -24,6 +24,7 @@ public static class MauiProgram
 #pragma warning restore CA1416 // プラットフォームの互換性を検証
 #endif
         });
+
         var builder = MauiApp.CreateBuilder();
 
         builder.Configuration.AddUserSecrets<App>();
@@ -37,11 +38,14 @@ public static class MauiProgram
        ;
         builder
             .UseMauiApp<App>()
-            .UseFontAwesome()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Font Awesome 6 Free-Solid-900.otf", "FASolid");
+                fonts.AddFont("Font Awesome 6 Brands-Regular-400.otf", "FABrands");
+                fonts.AddFont("Font Awesome 6 Free-Regular-400.otf", "FARegular");
             });
 #if DEBUG
         builder.Logging.AddDebug();

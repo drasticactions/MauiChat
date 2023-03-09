@@ -9,6 +9,6 @@ namespace MauiChat.Models
     public enum ChatMessageType
     {
         AI,
-        User,
+        User
     }
 }

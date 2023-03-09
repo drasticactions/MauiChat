@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:core="clr-namespace:Brushtail.FontAwesome.Core;assembly=Brushtail.FontAwesome.Core"
-             xmlns:mobile="clr-namespace:Brushtail.FontAwesome.Mobile;assembly=Brushtail.FontAwesome.Mobile"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:local="clr-namespace:MauiChat"
+             Title="MauiChat"
              x:Class="MauiChat.MainPage">
 
   <ContentPage.ToolbarItems>
       <ToolbarItem>
           <ToolbarItem.IconImageSource>
-               <FontImageSource FontFamily="FontAwesome"
-                         Glyph="{x:Static core:Icon.Gear}"/>
-          </ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FASolid"
+                         Glyph=""/>
+            </ToolbarItem.IconImageSource>
       </ToolbarItem> 
 
   </ContentPage.ToolbarItems>
@@ -20,43 +20,64 @@
         <ResourceDictionary>
             
             <DataTemplate x:Key="UserTemplate">
-                <Grid>
+                <Grid Margin="5">
                     
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Frame CornerRadius="2" Margin="5">
-                        <Label Text="{Binding Message}" LineBreakMode="WordWrap" HorizontalTextAlignment="End" />
-                    </Frame>
+                    <Border Stroke="{StaticResource Gray500}" Margin="5">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5"/>
+                        </Border.StrokeShape>
+                        <Grid Margin="10">
+                            <Label Text="{Binding Message}" LineBreakMode="WordWrap" HorizontalTextAlignment="End" />
+                        </Grid>
+                    </Border>
 
-                    <Image Grid.Column="1" Source="dotnet_bot.png" WidthRequest="50" HeightRequest="50" 
+                    <Border Stroke="{StaticResource Gray500}" Margin="5" VerticalOptions="Start" WidthRequest="60" HeightRequest="60" Background="White" Grid.Column="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5"/>
+                        </Border.StrokeShape>
+                        <Image Source="avatar.png" WidthRequest="50" HeightRequest="50" 
                            Margin="5" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    </Border>
                     
                 </Grid>
             </DataTemplate>
-            
+
             <DataTemplate x:Key="ChatGPTTemplate">
-                <Grid>
-                    
+                <Grid Margin="5">
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    
-                    <Image Source="dotnet_bot.png" WidthRequest="50" HeightRequest="50" Margin="5" />
-                    
-                    <Frame CornerRadius="4" Margin="5" Grid.Column="1">
-                        <Label Text="{Binding Message}" LineBreakMode="WordWrap" />
-                    </Frame>
-                    
+
+                    <Border Margin="5" VerticalOptions="Start" WidthRequest="60" HeightRequest="60" Stroke="{StaticResource Gray500}" Background="White">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5"/>
+                        </Border.StrokeShape>
+                        <Image Source="dotnet_bot.png" WidthRequest="50" HeightRequest="50" Margin="5" />
+                    </Border>
+
+                    <Border Stroke="{StaticResource Gray500}" Margin="5" Grid.Column="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5"/>
+                        </Border.StrokeShape>
+                        <Grid Margin="10">
+                            <ActivityIndicator  IsRunning="{Binding IsBusy}" Margin="5" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" />
+                            <Label IsVisible="{Binding IsBusy, Converter={StaticResource BooleanInverter}}" Text="{Binding Message}" LineBreakMode="WordWrap" />
+                        </Grid>
+                    </Border>
+
                 </Grid>
             </DataTemplate>
 
             <local:SpeakerSelector x:Key="SpeakerSelector"
-                    UserTemplate="{StaticResource UserTemplate}"
-                    ChatGPTTemplate="{StaticResource ChatGPTTemplate}" />
+                                   UserTemplate="{StaticResource UserTemplate}"
+                                   ChatGPTTemplate="{StaticResource ChatGPTTemplate}" />
 
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -66,15 +87,20 @@
         <CollectionView Grid.Row="1" x:Name="Conversation" ItemsSource="{Binding Messages}" ItemTemplate="{StaticResource SpeakerSelector}" 
                         ItemsUpdatingScrollMode="KeepLastItemInView" />
 
-        <Grid Margin="5" Grid.Row="2">
+        <Grid Margin="5" ColumnSpacing="15" Grid.Row="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Entry Completed="UserEntry_Completed" Text="{Binding Message, Mode=TwoWay}" x:Name="UserEntry"></Entry>
-            <Button Text="Send" Grid.Column="1" Command="{Binding SendMessageCommand}"></Button>
+            <ImageButton Grid.Column="1" Command="{Binding SendMessageCommand}">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="FARegular"
+                         Glyph=""/>
+                </ImageButton.Source>
+            </ImageButton>
         </Grid>
 
     </Grid>
