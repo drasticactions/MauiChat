@@ -27,12 +27,12 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Border Stroke="{StaticResource Gray500}" Margin="5">
+                    <Border Stroke="{StaticResource Gray500}" Background="{StaticResource Gray900}" Margin="5">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="5"/>
                         </Border.StrokeShape>
                         <Grid Margin="10">
-                            <Label Text="{Binding Message}" LineBreakMode="WordWrap" HorizontalTextAlignment="End" />
+                            <Label TextColor="White" Text="{Binding Message}" LineBreakMode="WordWrap" HorizontalTextAlignment="End" />
                         </Grid>
                     </Border>
 
@@ -62,13 +62,13 @@
                         <Image Source="dotnet_bot.png" WidthRequest="50" HeightRequest="50" Margin="5" />
                     </Border>
 
-                    <Border Stroke="{StaticResource Gray500}" Margin="5" Grid.Column="1">
+                    <Border Stroke="{StaticResource Gray500}" Background="{StaticResource Gray900}" Margin="5" Grid.Column="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="5"/>
                         </Border.StrokeShape>
                         <Grid Margin="10">
-                            <ActivityIndicator  IsRunning="{Binding IsBusy}" Margin="5" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" />
-                            <Label IsVisible="{Binding IsBusy, Converter={StaticResource BooleanInverter}}" Text="{Binding Message}" LineBreakMode="WordWrap" />
+                            <ActivityIndicator Color="White" IsRunning="{Binding IsBusy}" Margin="5" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" />
+                            <Label TextColor="White" IsVisible="{Binding IsBusy, Converter={StaticResource BooleanInverter}}" Text="{Binding Message}" LineBreakMode="WordWrap" />
                         </Grid>
                     </Border>
 
