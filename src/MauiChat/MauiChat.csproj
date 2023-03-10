@@ -55,6 +55,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.7.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<PackageReference Include="Drastic.Markdown.Maui" Version="1.0.11" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Icon\dotnet_bot.png" />
