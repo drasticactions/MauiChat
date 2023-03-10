@@ -2,6 +2,7 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
+using Drastic.Markdown;
 using Drastic.Tools;
 using MauiChat.ViewModels;
 

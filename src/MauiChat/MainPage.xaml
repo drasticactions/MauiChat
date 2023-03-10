@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:Drastic.Markdown;assembly=Drastic.Markdown.Maui"
+             xmlns:utilities="clr-namespace:MauiChat.Utilities"
              xmlns:local="clr-namespace:MauiChat"
              x:Class="MauiChat.MainPage">
 
@@ -18,8 +19,8 @@
 
 <ContentPage.Resources>
         <ResourceDictionary>
-            <controls:DarkMarkdownTheme x:Key="DarkTheme" />
-            <controls:LightMarkdownTheme x:Key="LightTheme" />
+            <utilities:DarkMarkdownTheme x:Key="DarkTheme" />
+            <utilities:LightMarkdownTheme x:Key="LightTheme" />
             <DataTemplate x:Key="UserTemplate">
                 <Grid Margin="5">
                     
